@@ -9,22 +9,20 @@ namespace Labb3.ViewModels
     {
         public ICommand OpenPlayCommand { get; }
 
-        private object _selectedViewModel;
+        public MainMenuViewModel MainMenuViewModel { get; }
 
-        public object SelectedViewModel
+        public string[] QuizTitles { get; }
+
+        public PlayMenuViewModel(MainMenuViewModel mainMenuViewModel)
         {
-            get => _selectedViewModel;
-            set => SetProperty(ref _selectedViewModel, value);
+            OpenPlayCommand = new RelayCommand<string>(OpenPlayView);
+            QuizTitles = Quiz.GetQuizTitles();
+            MainMenuViewModel = mainMenuViewModel;
         }
 
-        public PlayMenuViewModel()
+        private async void OpenPlayView(string title)
         {
-            OpenPlayCommand = new RelayCommand(OpenPlayView);
-        }
-
-        private void OpenPlayView()
-        {
-            SelectedViewModel = new PlayViewModel(new QuizGameModel(FileManagerModel.LoadFile()));
+            MainMenuViewModel.SelectedViewModel = new PlayViewModel(new QuizGameModel(await FileManagerModel.LoadFileAsync(title)), MainMenuViewModel);
         }
     }
 }

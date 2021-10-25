@@ -27,7 +27,7 @@ namespace Labb3.ViewModels
 
         private void OpenPlayMenuView()
         {
-            SelectedViewModel = new PlayMenuViewModel();
+            SelectedViewModel = new PlayMenuViewModel(this);
         }
         private void OpenCreateMenuView()
         {

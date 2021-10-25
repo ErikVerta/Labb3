@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using Microsoft.Toolkit.Mvvm.ComponentModel;
 
 namespace Labb3.Models
@@ -17,11 +14,11 @@ namespace Labb3.Models
             set => SetProperty(ref _currentQuestion, value);
         }
 
-        private Quiz CurrentQuiz { get; }
+        public Quiz CurrentQuiz { get; }
 
-        private ICollection<Question> _answeredQuestions;
+        private ObservableCollection<Question> _answeredQuestions;
 
-        public ICollection<Question> AnsweredQuestions
+        public ObservableCollection<Question> AnsweredQuestions
         {
             get => _answeredQuestions;
             set => SetProperty(ref _answeredQuestions, value);
@@ -30,26 +27,29 @@ namespace Labb3.Models
         public QuizGameModel(Quiz currentQuiz)
         {
             CurrentQuiz = currentQuiz;
+            AnsweredQuestions = new ObservableCollection<Question>();
         }
 
-        public void GetQuestion()
+        public bool GetQuestion()
         {
-            var question = CurrentQuiz.GetRandomQuestion();
             if (AnsweredQuestions.Count == CurrentQuiz.Questions.Count)
             {
-                return;
+                return false;
             }
-            else if (AnsweredQuestions.Contains(question))
+
+            var question = CurrentQuiz.GetRandomQuestion();
+            while (AnsweredQuestions.Contains(question))
             {
-                GetQuestion();
+                question = CurrentQuiz.GetRandomQuestion();
             }
 
             CurrentQuestion = question;
+            return true;
         }
 
         public bool ValidateAnswer(int answer)
         {
-            return CurrentQuestion.Answers[answer].ToLower() == CurrentQuestion.Answers[CurrentQuestion.CorrectAnswer];
+            return CurrentQuestion.Answers[answer].ToLower() == CurrentQuestion.Answers[CurrentQuestion.CorrectAnswer].ToLower();
         }
     }
 }

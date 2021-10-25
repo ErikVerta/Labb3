@@ -25,7 +25,8 @@
         <ComboBox
             x:Name="QuizTitlesBox"
             Grid.Row="1"
-            Grid.Column="1" />
+            Grid.Column="1"
+            ItemsSource="{Binding QuizTitles}" />
         <Label
             Grid.Column="1"
             Grid.ColumnSpan="2"
@@ -37,10 +38,7 @@
             Grid.Column="2"
             Width="100"
             Command="{Binding OpenPlayCommand}"
+            CommandParameter="{Binding Text, ElementName=QuizTitlesBox}"
             Content="Select" />
-        <ContentControl
-            Grid.Row="2"
-            Grid.ColumnSpan="4"
-            Content="{Binding SelectedViewModel}" />
     </Grid>
 </UserControl>

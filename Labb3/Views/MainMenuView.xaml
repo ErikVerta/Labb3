@@ -18,6 +18,12 @@
         <DataTemplate DataType="{x:Type viewModels:CreateViewModel}">
             <local:CreateMenuView />
         </DataTemplate>
+        <DataTemplate DataType="{x:Type viewModels:PlayViewModel}">
+            <local:PlayView />
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type viewModels:ResultViewModel}">
+            <local:ResultView />
+        </DataTemplate>
     </Window.Resources>
     <Grid>
         <Grid.ColumnDefinitions>

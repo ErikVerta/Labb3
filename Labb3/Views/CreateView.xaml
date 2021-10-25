@@ -43,7 +43,8 @@
         <TextBox
             x:Name="TitleTextBox"
             Grid.Row="2"
-            Grid.Column="1" />
+            Grid.Column="1"
+            Text="{Binding Title, UpdateSourceTrigger=PropertyChanged}" />
         <Label
             Grid.Row="0"
             Grid.RowSpan="2"
@@ -52,20 +53,13 @@
             HorizontalAlignment="Center"
             Content="Create a Quiz"
             FontSize="30" />
-        <Button
+        <TextBlock
+            x:Name="TitleAvailableTextBlock"
             Grid.Row="2"
             Grid.Column="2"
-            Width="100"
-            Command="{Binding CheckTitleCommand}"
-            CommandParameter="{Binding Text, ElementName=TitleTextBox}"
-            Content="Check" />
-        <TextBlock
-            x:Name="TitleTakenTextBlock"
-            Grid.Row="2"
-            Grid.Column="3"
             FontSize="13"
-            Text="Title is taken, try again."
-            Visibility="{Binding IsVisible, Converter={StaticResource BooleanToVisibilityConverter}}" />
+            Foreground="{Binding ValidateTitleTextColor}"
+            Text="{Binding ValidateTitleText}" />
         <Label
             Grid.Row="3"
             Grid.RowSpan="3"
@@ -76,7 +70,8 @@
         <TextBox
             x:Name="StatementTextBox"
             Grid.Row="4"
-            Grid.Column="1" />
+            Grid.Column="1"
+            Text="{Binding Statement}" />
         <Label
             Grid.Row="5"
             Grid.RowSpan="3"
@@ -87,12 +82,15 @@
         <TextBox
             x:Name="Answer1TextBox"
             Grid.Row="6"
-            Grid.Column="1" />
+            Grid.Column="1"
+            Text="{Binding Answer1}" />
         <RadioButton
             x:Name="Answer1CheckBox"
             Grid.Row="6"
             Grid.Column="2"
-            HorizontalAlignment="Center" />
+            HorizontalAlignment="Center"
+            Command="{Binding RadioButtonCommand}"
+            CommandParameter="0" />
         <Label
             Grid.Row="7"
             Grid.RowSpan="3"
@@ -103,12 +101,15 @@
         <TextBox
             x:Name="Answer2TextBox"
             Grid.Row="8"
-            Grid.Column="1" />
+            Grid.Column="1"
+            Text="{Binding Answer2}" />
         <RadioButton
             x:Name="Answer2CheckBox"
             Grid.Row="8"
             Grid.Column="2"
-            HorizontalAlignment="Center" />
+            HorizontalAlignment="Center"
+            Command="{Binding RadioButtonCommand}"
+            CommandParameter="1" />
         <Label
             Grid.Row="9"
             Grid.RowSpan="3"
@@ -119,12 +120,15 @@
         <TextBox
             x:Name="Answer3TextBox"
             Grid.Row="10"
-            Grid.Column="1" />
+            Grid.Column="1"
+            Text="{Binding Answer3}" />
         <RadioButton
             x:Name="Answer3CheckBox"
             Grid.Row="10"
             Grid.Column="2"
-            HorizontalAlignment="Center" />
+            HorizontalAlignment="Center"
+            Command="{Binding RadioButtonCommand}"
+            CommandParameter="2" />
         <Button
             x:Name="SaveQuiz"
             Grid.Row="11"
@@ -132,8 +136,10 @@
             Grid.ColumnSpan="2"
             Width="100"
             Height="40"
+            Command="{Binding SaveQuizCommand}"
             Content="Save" />
         <Button
+            x:Name="AddQuestion"
             Grid.Row="11"
             Grid.Column="1"
             Grid.ColumnSpan="2"
@@ -141,6 +147,7 @@
             Height="40"
             Margin="5"
             VerticalAlignment="Top"
+            Command="{Binding AddQuestionCommand}"
             Content="Add" />
     </Grid>
 </UserControl>

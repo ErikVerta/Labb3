@@ -1,10 +1,8 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Text.Json.Serialization;
 
 namespace Labb3.Models
 {
@@ -15,15 +13,11 @@ namespace Labb3.Models
 
         private readonly Random _r = new Random();
 
+        [JsonConstructor]
         public Quiz(ICollection<Question> questions, string title)
         {
             Questions = questions;
             Title = title;
-        }
-
-        public Quiz(string title)
-        {
-            Questions = new List<Question>();
         }
 
         public Question GetRandomQuestion()
