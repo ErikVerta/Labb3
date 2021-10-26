@@ -1,4 +1,6 @@
-﻿using System.Windows.Input;
+﻿using System.Windows;
+using System.Windows.Input;
+using Labb3.Models;
 using Microsoft.Toolkit.Mvvm.ComponentModel;
 using Microsoft.Toolkit.Mvvm.Input;
 
@@ -6,36 +8,46 @@ namespace Labb3.ViewModels
 {
     internal sealed class MainMenuViewModel : ObservableObject
     {
-        public ICommand PlayCommand { get; }
-        public ICommand CreateCommand { get; }
-        public ICommand EditCommand { get; }
+        public ICommand OpenPlayCommand { get; }
+        public ICommand OpenEditCommand { get; }
+        public ICommand OpenCreateCommand { get; }
 
-        private object _selectedViewModel;
+        public MainWindowViewModel MainWindowViewModel { get; }
 
-        public object SelectedViewModel
+        public string[] QuizTitles { get; }
+
+        public MainMenuViewModel(MainWindowViewModel mainWindowViewModel)
         {
-            get => _selectedViewModel;
-            set => SetProperty(ref _selectedViewModel, value);
+            OpenPlayCommand = new RelayCommand<string>(OpenPlayView);
+            OpenCreateCommand = new RelayCommand(OpenCreateView);
+            OpenEditCommand = new RelayCommand<string>(OpenEditView);
+            QuizTitles = Quiz.GetQuizTitles();
+            MainWindowViewModel = mainWindowViewModel;
         }
 
-        public MainMenuViewModel()
+        private async void OpenPlayView(string title)
         {
-            PlayCommand = new RelayCommand(OpenPlayMenuView);
-            CreateCommand = new RelayCommand(OpenCreateMenuView);
-            EditCommand = new RelayCommand(OpenEditMenuView);
+            if (string.IsNullOrEmpty(title))
+            {
+                MessageBox.Show("Please choose a quiz to play.");
+                return;
+            }
+            MainWindowViewModel.SelectedViewModel = new PlayViewModel(new PlayModel(await FileManagerModel.LoadFileAsync(title)), MainWindowViewModel);
         }
 
-        private void OpenPlayMenuView()
+        private void OpenCreateView()
         {
-            SelectedViewModel = new PlayMenuViewModel(this);
+            MainWindowViewModel.SelectedViewModel = new CreateViewModel(MainWindowViewModel);
         }
-        private void OpenCreateMenuView()
+
+        private async void OpenEditView(string title)
         {
-            SelectedViewModel = new CreateViewModel();
-        }
-        private void OpenEditMenuView()
-        {
-            SelectedViewModel = new EditMenuViewModel();
+            if (string.IsNullOrEmpty(title))
+            {
+                MessageBox.Show("Please choose a quiz to edit.");
+                return;
+            }
+            MainWindowViewModel.SelectedViewModel = new EditViewModel(new EditModel(await FileManagerModel.LoadFileAsync(title)), MainWindowViewModel);
         }
     }
 }

@@ -8,7 +8,7 @@ namespace Labb3.ViewModels
 {
     internal sealed class PlayViewModel : ObservableObject
     {
-        public QuizGameModel CurrentQuizGame { get; set; }
+        public PlayModel PlayModel { get; }
         private int _correctAnswers;
 
         public int CorrectAnswers
@@ -49,19 +49,19 @@ namespace Labb3.ViewModels
             get => _answer3ButtonColor;
             set => SetProperty(ref _answer3ButtonColor, value);
         }
-        public MainMenuViewModel MainMenuViewModel { get; }
+        public MainWindowViewModel MainWindowViewModel { get; }
 
-        public PlayViewModel(QuizGameModel currentQuizGame, MainMenuViewModel mainMenuViewModel)
+        public PlayViewModel(PlayModel playModel, MainWindowViewModel mainWindowViewModel)
         {
-            CurrentQuizGame = currentQuizGame;
+            PlayModel = playModel;
             AnswerQuestionCommand = new RelayCommand<string>(OnAnswer);
             NextQuestionCommand = new RelayCommand(NextQuestion);
             NextButtonIsEnabled = false;
-            currentQuizGame.GetQuestion();
+            playModel.GetQuestion();
             Answer1ButtonColor = Brushes.Wheat;
             Answer2ButtonColor = Brushes.Wheat;
             Answer3ButtonColor = Brushes.Wheat;
-            MainMenuViewModel = mainMenuViewModel;
+            MainWindowViewModel = mainWindowViewModel;
         }
 
         private void NextQuestion()
@@ -69,15 +69,15 @@ namespace Labb3.ViewModels
             Answer1ButtonColor = Brushes.Wheat;
             Answer2ButtonColor = Brushes.Wheat;
             Answer3ButtonColor = Brushes.Wheat;
-            if (!CurrentQuizGame.GetQuestion())
+            if (!PlayModel.GetQuestion())
             {
-                MainMenuViewModel.SelectedViewModel = new ResultViewModel(CorrectAnswers, CurrentQuizGame.AnsweredQuestions.Count);
+                MainWindowViewModel.SelectedViewModel = new ResultViewModel(CorrectAnswers, PlayModel.AnsweredQuestions.Count, MainWindowViewModel);
             }
             NextButtonIsEnabled = false;
         }
         private void OnAnswer(string answerIndex)
         {
-            if (!CurrentQuizGame.ValidateAnswer((int.Parse(answerIndex))))
+            if (!PlayModel.ValidateAnswer((int.Parse(answerIndex))))
             {
                 NextButtonIsEnabled = true;
             }
@@ -87,7 +87,7 @@ namespace Labb3.ViewModels
                 NextButtonIsEnabled = true;
             }
 
-            switch (CurrentQuizGame.CurrentQuestion.CorrectAnswer)
+            switch (PlayModel.CurrentQuestion.CorrectAnswer)
             {
                 case 0:
                     Answer1ButtonColor = Brushes.Green;
@@ -105,7 +105,7 @@ namespace Labb3.ViewModels
                     Answer3ButtonColor = Brushes.Green;
                     break;
             }
-            CurrentQuizGame.AnsweredQuestions.Add(CurrentQuizGame.CurrentQuestion);
+            PlayModel.AnsweredQuestions.Add(PlayModel.CurrentQuestion);
         }
     }
 }

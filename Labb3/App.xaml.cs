@@ -13,8 +13,8 @@ namespace Labb3
         {
             base.OnStartup(e);
 
-            var mainMenuViewModel = new MainMenuViewModel();
-            var mainMenu = new MainMenuView {DataContext = mainMenuViewModel};
+            var mainWindowViewModel = new MainWindowViewModel();
+            var mainMenu = new MainWindow {DataContext = mainWindowViewModel};
 
             mainMenu.Show();
         }

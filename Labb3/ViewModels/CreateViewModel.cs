@@ -14,10 +14,11 @@ namespace Labb3.ViewModels
         public ICommand SaveQuizCommand { get; }
         public ICommand AddQuestionCommand { get; }
         public ICommand RadioButtonCommand { get; }
+        public ICommand MainMenuCommand { get; }
 
         private int CorrectAnswer { get; set; }
 
-        public ICollection<Question> Questions { get; }
+        public List<Question> Questions { get; }
         private string _statement;
 
         public string Statement
@@ -75,14 +76,23 @@ namespace Labb3.ViewModels
             set => SetProperty(ref _validateTitleTextColor, value);
         }
 
-        public CreateViewModel()
+        private MainWindowViewModel MainWindowViewModel { get; }
+
+        public CreateViewModel(MainWindowViewModel mainWindowViewModel)
         {
+            MainWindowViewModel = mainWindowViewModel;
             SaveQuizCommand = new RelayCommand(SaveQuiz);
             AddQuestionCommand = new RelayCommand(SaveQuestion);
             RadioButtonCommand = new RelayCommand<string>(SaveCorrectAnswer);
+            MainMenuCommand = new RelayCommand(OpenMainMenuView);
             Questions = new List<Question>();
             ValidateTitleText = "Unavailable";
             ValidateTitleTextColor = Brushes.Red;
+        }
+
+        private void OpenMainMenuView()
+        {
+            MainWindowViewModel.SelectedViewModel = new MainMenuViewModel(MainWindowViewModel);
         }
 
         private void SaveCorrectAnswer(string number)
@@ -99,7 +109,7 @@ namespace Labb3.ViewModels
             }
             else if (CorrectAnswer < 0 || CorrectAnswer > 2)
             {
-                MessageBox.Show("Please choose the correct answer.");
+                MessageBox.Show("Please chose the correct answer.");
                 return;
             }
             string[] answers = new[] { Answer1, Answer2, Answer3 };
@@ -133,7 +143,7 @@ namespace Labb3.ViewModels
                 {
                     return false;
                 }
-                else if(string.IsNullOrEmpty(title))
+                else if (string.IsNullOrEmpty(title))
                 {
                     return false;
                 }
@@ -156,6 +166,7 @@ namespace Labb3.ViewModels
             Answer2 = string.Empty;
             Answer3 = string.Empty;
             MessageBox.Show("Quiz Saved.");
+            MainWindowViewModel.SelectedViewModel = new MainMenuViewModel(MainWindowViewModel);
         }
     }
 }

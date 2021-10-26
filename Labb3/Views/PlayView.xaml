@@ -23,7 +23,7 @@
             HorizontalAlignment="Center"
             VerticalAlignment="Center"
             FontSize="30"
-            Text="{Binding CurrentQuizGame.CurrentQuestion.Statement}"
+            Text="{Binding PlayModel.CurrentQuestion.Statement}"
             TextWrapping="Wrap" />
         <TextBlock
             x:Name="ScoreTextBlock"
@@ -38,8 +38,8 @@
             FontSize="20">
             <TextBlock.Text>
                 <MultiBinding StringFormat="{}{0}/{1}">
-                    <Binding Path="CurrentQuizGame.AnsweredQuestions.Count" />
-                    <Binding Path="CurrentQuizGame.CurrentQuiz.Questions.Count" />
+                    <Binding Path="PlayModel.AnsweredQuestions.Count" />
+                    <Binding Path="PlayModel.CurrentQuiz.Questions.Count" />
                 </MultiBinding>
             </TextBlock.Text>
         </TextBlock>
@@ -54,7 +54,7 @@
             CommandParameter="0">
             <TextBlock
                 FontSize="20"
-                Text="{Binding CurrentQuizGame.CurrentQuestion.Answers[0]}"
+                Text="{Binding PlayModel.CurrentQuestion.Answers[0]}"
                 TextAlignment="Center"
                 TextWrapping="Wrap" />
         </Button>
@@ -68,7 +68,7 @@
             CommandParameter="1">
             <TextBlock
                 FontSize="20"
-                Text="{Binding CurrentQuizGame.CurrentQuestion.Answers[1]}"
+                Text="{Binding PlayModel.CurrentQuestion.Answers[1]}"
                 TextAlignment="Center"
                 TextWrapping="Wrap" />
         </Button>
@@ -82,7 +82,7 @@
             CommandParameter="2">
             <TextBlock
                 FontSize="20"
-                Text="{Binding CurrentQuizGame.CurrentQuestion.Answers[2]}"
+                Text="{Binding PlayModel.CurrentQuestion.Answers[2]}"
                 TextAlignment="Center"
                 TextWrapping="Wrap" />
         </Button>

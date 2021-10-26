@@ -3,11 +3,11 @@
 namespace Labb3.Views
 {
     /// <summary>
-    /// Interaction logic for PlayMenuView.xaml
+    /// Interaction logic for EditView.xaml
     /// </summary>
-    public partial class PlayMenuView : UserControl
+    public partial class EditView : UserControl
     {
-        public PlayMenuView()
+        public EditView()
         {
             InitializeComponent();
         }

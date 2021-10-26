@@ -32,5 +32,15 @@ namespace Labb3.Models
 
             return quiz;
         }
+
+        public static void RemoveFileAsync(Quiz quiz)
+        {
+            string localPath = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
+            string folderPath = Path.Combine(localPath, @"Labb3");
+            string fullPath = Path.Combine(folderPath, @$"{quiz.Title}.json");
+            Directory.CreateDirectory(folderPath);
+
+            File.Delete(fullPath);
+        }
     }
 }

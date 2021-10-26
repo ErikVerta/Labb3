@@ -1,14 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Windows.Input;
 using Microsoft.Toolkit.Mvvm.ComponentModel;
+using Microsoft.Toolkit.Mvvm.Input;
 
 namespace Labb3.ViewModels
 {
-    internal sealed class ResultViewModel: ObservableObject
+    internal sealed class ResultViewModel : ObservableObject
     {
+        public ICommand FinishCommand { get; }
         private int _correctAnswers;
 
         public int CorrectAnswers
@@ -25,10 +23,19 @@ namespace Labb3.ViewModels
             set => SetProperty(ref _totalQuestionsCount, value);
         }
 
-        public ResultViewModel(int correctAnswers, int totalQuestionsCount)
+        public MainWindowViewModel MainWindowViewModel { get; }
+
+        public ResultViewModel(int correctAnswers, int totalQuestionsCount, MainWindowViewModel mainWindowViewModel)
         {
+            MainWindowViewModel = mainWindowViewModel;
             _correctAnswers = correctAnswers;
             _totalQuestionsCount = totalQuestionsCount;
+            FinishCommand = new RelayCommand(LoadMainMenu);
+        }
+
+        private void LoadMainMenu()
+        {
+            MainWindowViewModel.SelectedViewModel = new MainMenuViewModel(MainWindowViewModel);
         }
     }
 }

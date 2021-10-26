@@ -1,10 +1,9 @@
-﻿using System.Collections.Generic;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 using Microsoft.Toolkit.Mvvm.ComponentModel;
 
 namespace Labb3.Models
 {
-    internal sealed class QuizGameModel : ObservableObject
+    internal sealed class PlayModel : ObservableObject
     {
         private Question _currentQuestion;
 
@@ -24,7 +23,7 @@ namespace Labb3.Models
             set => SetProperty(ref _answeredQuestions, value);
         }
 
-        public QuizGameModel(Quiz currentQuiz)
+        public PlayModel(Quiz currentQuiz)
         {
             CurrentQuiz = currentQuiz;
             AnsweredQuestions = new ObservableCollection<Question>();

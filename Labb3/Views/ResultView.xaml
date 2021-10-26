@@ -15,6 +15,7 @@
             <RowDefinition Height="2*" />
             <RowDefinition />
             <RowDefinition />
+            <RowDefinition />
         </Grid.RowDefinitions>
         <Label
             HorizontalAlignment="Center"
@@ -31,6 +32,15 @@
             Grid.Row="2"
             HorizontalAlignment="Center"
             VerticalAlignment="Center"
+            FontSize="40"
             Text="{Binding TotalQuestionCount, StringFormat='Questions: {0}'}" />
+        <Button
+            x:Name="FinishButton"
+            Grid.Row="3"
+            Width="150"
+            Height="50"
+            Command="{Binding FinishCommand}"
+            Content="Finish"
+            FontSize="25" />
     </Grid>
 </UserControl>

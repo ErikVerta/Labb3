@@ -1,0 +1,34 @@
+﻿<Window
+    x:Class="Labb3.Views.MainWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:Labb3.Views"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:viewModels="clr-namespace:Labb3.ViewModels"
+    Title="MainWindow"
+    Width="800"
+    Height="450"
+    d:DataContext="{d:DesignInstance viewModels:MainWindowViewModel}"
+    mc:Ignorable="d">
+    <Window.Resources>
+        <DataTemplate DataType="{x:Type viewModels:MainMenuViewModel}">
+            <local:MainMenuView />
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type viewModels:CreateViewModel}">
+            <local:CreateMenuView />
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type viewModels:PlayViewModel}">
+            <local:PlayView />
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type viewModels:ResultViewModel}">
+            <local:ResultView />
+        </DataTemplate>
+        <DataTemplate DataType="{x:Type viewModels:EditViewModel}">
+            <local:EditView />
+        </DataTemplate>
+    </Window.Resources>
+    <Grid>
+        <ContentControl Content="{Binding SelectedViewModel}" />
+    </Grid>
+</Window>

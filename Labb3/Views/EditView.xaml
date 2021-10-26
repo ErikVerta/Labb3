@@ -1,17 +1,15 @@
 ﻿<UserControl
-    x:Class="Labb3.Views.CreateMenuView"
+    x:Class="Labb3.Views.EditView"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:Labb3.Views"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:viewModels="clr-namespace:Labb3.ViewModels"
-    d:DataContext="{d:DesignInstance viewModels:CreateViewModel}"
+    d:DataContext="{d:DesignInstance viewModels:EditViewModel}"
     d:DesignHeight="450"
     d:DesignWidth="800"
     mc:Ignorable="d">
-    <UserControl.Resources>
-        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
-    </UserControl.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="1*" />
@@ -34,32 +32,20 @@
             <ColumnDefinition Width="2*" />
         </Grid.ColumnDefinitions>
         <Label
-            Grid.Row="1"
-            Grid.RowSpan="3"
-            Grid.Column="0"
-            HorizontalAlignment="Right"
-            Content="Title:"
-            FontSize="25" />
-        <TextBox
-            x:Name="TitleTextBox"
-            Grid.Row="2"
-            Grid.Column="1"
-            Text="{Binding Title, UpdateSourceTrigger=PropertyChanged}" />
-        <Label
             Grid.Row="0"
             Grid.RowSpan="2"
             Grid.Column="1"
             Grid.ColumnSpan="2"
             HorizontalAlignment="Center"
-            Content="Create a Quiz"
+            Content="{Binding EditModel.CurrentQuiz.Title}"
             FontSize="30" />
-        <TextBlock
-            x:Name="TitleAvailableTextBlock"
+        <ComboBox
+            x:Name="StatementsComboBox"
             Grid.Row="2"
-            Grid.Column="2"
-            FontSize="13"
-            Foreground="{Binding ValidateTitleTextColor}"
-            Text="{Binding ValidateTitleText}" />
+            Grid.Column="1"
+            Grid.ColumnSpan="2"
+            ItemsSource="{Binding Statements}"
+            Text="{Binding ComboBoxText}" />
         <Label
             Grid.Row="3"
             Grid.RowSpan="3"
@@ -85,12 +71,13 @@
             Grid.Column="1"
             Text="{Binding Answer1}" />
         <RadioButton
-            x:Name="Answer1CheckBox"
+            x:Name="Answer1RadioButton"
             Grid.Row="6"
             Grid.Column="2"
             HorizontalAlignment="Center"
             Command="{Binding RadioButtonCommand}"
-            CommandParameter="0" />
+            CommandParameter="0"
+            IsChecked="{Binding Answer1RadioButtonIsChecked}" />
         <Label
             Grid.Row="7"
             Grid.RowSpan="3"
@@ -99,7 +86,7 @@
             Content="Answer 2:"
             FontSize="25" />
         <TextBox
-            x:Name="Answer2TextBox"
+            x:Name="Answer2RadioButton"
             Grid.Row="8"
             Grid.Column="1"
             Text="{Binding Answer2}" />
@@ -109,7 +96,8 @@
             Grid.Column="2"
             HorizontalAlignment="Center"
             Command="{Binding RadioButtonCommand}"
-            CommandParameter="1" />
+            CommandParameter="1"
+            IsChecked="{Binding Answer2RadioButtonIsChecked}" />
         <Label
             Grid.Row="9"
             Grid.RowSpan="3"
@@ -118,7 +106,7 @@
             Content="Answer 3:"
             FontSize="25" />
         <TextBox
-            x:Name="Answer3TextBox"
+            x:Name="Answer3RadioButton"
             Grid.Row="10"
             Grid.Column="1"
             Text="{Binding Answer3}" />
@@ -128,18 +116,20 @@
             Grid.Column="2"
             HorizontalAlignment="Center"
             Command="{Binding RadioButtonCommand}"
-            CommandParameter="2" />
+            CommandParameter="2"
+            IsChecked="{Binding Answer3RadioButtonIsChecked}" />
         <Button
-            x:Name="SaveQuiz"
+            x:Name="FinishButton"
             Grid.Row="11"
             Grid.Column="1"
             Grid.ColumnSpan="2"
             Width="100"
             Height="40"
-            Command="{Binding SaveQuizCommand}"
-            Content="Save" />
+            Command="{Binding FinishCommand}"
+            Content="Finish"
+            IsEnabled="{Binding FinishButtonIsEnabled}" />
         <Button
-            x:Name="AddQuestion"
+            x:Name="SaveButton"
             Grid.Row="11"
             Grid.Column="1"
             Grid.ColumnSpan="2"
@@ -147,8 +137,8 @@
             Height="40"
             Margin="5"
             VerticalAlignment="Top"
-            Command="{Binding AddQuestionCommand}"
-            Content="Add" />
+            Command="{Binding SaveQuestionCommand}"
+            Content="Save" />
         <Button
             x:Name="MainMenuButton"
             Grid.Row="11"
