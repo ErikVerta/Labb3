@@ -29,6 +29,7 @@ namespace Labb3.Models
             AnsweredQuestions = new ObservableCollection<Question>();
         }
 
+        //Makes sure that not all questions has been answered, then sets currentQuestion to a question that has not yet been answered.
         public bool GetQuestion()
         {
             if (AnsweredQuestions.Count == CurrentQuiz.Questions.Count)
@@ -46,9 +47,10 @@ namespace Labb3.Models
             return true;
         }
 
+        //Checks if the parameter answer is the same as CorrectAnswer.
         public bool ValidateAnswer(int answer)
         {
-            return CurrentQuestion.Answers[answer].ToLower() == CurrentQuestion.Answers[CurrentQuestion.CorrectAnswer].ToLower();
+            return answer == CurrentQuestion.CorrectAnswer;
         }
     }
 }

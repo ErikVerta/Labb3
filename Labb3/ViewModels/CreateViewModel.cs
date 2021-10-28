@@ -83,23 +83,27 @@ namespace Labb3.ViewModels
             MainWindowViewModel = mainWindowViewModel;
             SaveQuizCommand = new RelayCommand(SaveQuiz);
             AddQuestionCommand = new RelayCommand(SaveQuestion);
-            RadioButtonCommand = new RelayCommand<string>(SaveCorrectAnswer);
+            RadioButtonCommand = new RelayCommand<string>(SetCorrectAnswer);
             MainMenuCommand = new RelayCommand(OpenMainMenuView);
             Questions = new List<Question>();
             ValidateTitleText = "Unavailable";
             ValidateTitleTextColor = Brushes.Red;
         }
 
+        //Changes the SelectedViewModel to MainMenuViewModel.
         private void OpenMainMenuView()
         {
             MainWindowViewModel.SelectedViewModel = new MainMenuViewModel(MainWindowViewModel);
         }
 
-        private void SaveCorrectAnswer(string number)
+        //Uses the radioButtons command-parameters to set the correctAnswer.
+        private void SetCorrectAnswer(string number)
         {
             CorrectAnswer = int.Parse(number);
         }
 
+        //Makes sure that the user has filled in all of the textBoxes then saves the question to a list of questions and
+        //clears the textBoxes.
         private void SaveQuestion()
         {
             if (string.IsNullOrEmpty(Statement) || string.IsNullOrEmpty(Answer1) || string.IsNullOrEmpty(Answer2) || string.IsNullOrEmpty(Answer3))
@@ -121,6 +125,7 @@ namespace Labb3.ViewModels
             MessageBox.Show("Question added.");
         }
 
+        //Changes the ValidateTitleText and color depending on if the title is already in use or not.
         private void CheckTitleAvailability()
         {
             if (!ValidateTitle(Title))
@@ -134,6 +139,7 @@ namespace Labb3.ViewModels
             ValidateTitleTextColor = Brushes.Green;
         }
 
+        //Validates the title by comparing it to the titles that are saved in the folder Labb3.
         private bool ValidateTitle(string title)
         {
             var allTitles = Quiz.GetQuizTitles();
@@ -152,6 +158,7 @@ namespace Labb3.ViewModels
             return true;
         }
 
+        //Makes sure that the title is available then saves the quiz to a .json file in the Labb3 folder.
         private void SaveQuiz()
         {
             if (ValidateTitleText == "Unavailable")

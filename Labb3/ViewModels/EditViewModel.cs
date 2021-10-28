@@ -100,9 +100,9 @@ namespace Labb3.ViewModels
         {
             MainWindowViewModel = mainWindowViewModel;
             EditModel = editModel;
-            RadioButtonCommand = new RelayCommand<string>(SaveCorrectAnswer);
+            RadioButtonCommand = new RelayCommand<string>(SetCorrectAnswer);
             SaveQuestionCommand = new RelayCommand(SaveQuestion);
-            FinishCommand = new RelayCommand(FinishEditing);
+            FinishCommand = new RelayCommand(SaveEditedQuiz);
             MainMenuCommand = new RelayCommand(OpenMainMenuView);
             Statements = editModel.GetStatements();
             ComboBoxText = string.Empty;
@@ -113,27 +113,37 @@ namespace Labb3.ViewModels
             FinishButtonIsEnabled = false;
         }
 
+        //Changes the SelectedViewModel to MainMenuViewModel.
         private void OpenMainMenuView()
         {
             MainWindowViewModel.SelectedViewModel = new MainMenuViewModel(MainWindowViewModel);
         }
 
-        private void FinishEditing()
+        //Makes sure that the question are saved then removes the old Quiz.json file from the folder Labb3 and saves the new one.
+        //It then changes the selectedViewModel to MainMenuViewModel.
+        private void SaveEditedQuiz()
         {
             if (!string.IsNullOrEmpty(ComboBoxText) && (EditModel.CurrentQuestion.Statement != Statement || EditModel.CurrentQuestion.Answers[0] != Answer1 ||
                 EditModel.CurrentQuestion.Answers[1] != Answer2 || EditModel.CurrentQuestion.Answers[2] != Answer3))
             {
-                MessageBox.Show("Unsaved Changes.");
+                MessageBox.Show("Unsaved changes.");
                 return;
             }
             FileManagerModel.RemoveFileAsync(EditModel.CurrentQuiz);
             FileManagerModel.SaveFileAsync(EditModel.CurrentQuiz);
-            MessageBox.Show("Quiz Saved.");
+            MessageBox.Show("Quiz saved.");
             MainWindowViewModel.SelectedViewModel = new MainMenuViewModel(MainWindowViewModel);
         }
 
+        //Makes sure that changes has been made then removes the old question and saves the new one.
         private void SaveQuestion()
         {
+            if (EditModel.CurrentQuestion.Statement == Statement || EditModel.CurrentQuestion.Answers[0] == Answer1 ||
+                EditModel.CurrentQuestion.Answers[1] == Answer2 || EditModel.CurrentQuestion.Answers[2] == Answer3)
+            {
+                MessageBox.Show("No changes has been made.");
+                return;
+            }
             var index = EditModel.GetIndex(ComboBoxText);
             EditModel.CurrentQuiz.RemoveQuestion(index);
             EditModel.CurrentQuiz.AddQuestion(Statement, CorrectAnswer, Answer1, Answer2, Answer3);
@@ -141,11 +151,14 @@ namespace Labb3.ViewModels
             Statements = EditModel.GetStatements();
         }
 
-        private void SaveCorrectAnswer(string index)
+        //Uses the radioButtons command-parameters to set the correctAnswer.
+        private void SetCorrectAnswer(string index)
         {
             CorrectAnswer = int.Parse(index);
         }
 
+        //If the ComboBoxText is empty it will clear all of the TextBoxes and set uncheck all radiButtons,
+        //otherwise it will set the currentQuestion and set the corresponding properties.
         private void ChangeQuestion()
         {
             if (string.IsNullOrEmpty(ComboBoxText))

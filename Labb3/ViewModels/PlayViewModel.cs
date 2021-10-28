@@ -64,6 +64,8 @@ namespace Labb3.ViewModels
             MainWindowViewModel = mainWindowViewModel;
         }
 
+        //If PlayModel.GetQuestion returns false the user has answered all the question and it changes SelectedViewModel to ResultViewModel.
+        //Otherwise it disables the next button.
         private void NextQuestion()
         {
             Answer1ButtonColor = Brushes.Wheat;
@@ -75,6 +77,9 @@ namespace Labb3.ViewModels
             }
             NextButtonIsEnabled = false;
         }
+
+        //If the user guesses right it will increase CorrectAnswers by 1 then it changes the color of the answerButtons to show the correct answer.
+        //Then it adds the question to AnsweredQuestions.
         private void OnAnswer(string answerIndex)
         {
             if (!PlayModel.ValidateAnswer((int.Parse(answerIndex))))

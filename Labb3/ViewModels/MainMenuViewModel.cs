@@ -25,6 +25,7 @@ namespace Labb3.ViewModels
             MainWindowViewModel = mainWindowViewModel;
         }
 
+        //Uses the PlayButton command-parameter to make sure that a quiz has been selected then changes the SelectedViewModel to PlayViewModel.
         private async void OpenPlayView(string title)
         {
             if (string.IsNullOrEmpty(title))
@@ -34,12 +35,13 @@ namespace Labb3.ViewModels
             }
             MainWindowViewModel.SelectedViewModel = new PlayViewModel(new PlayModel(await FileManagerModel.LoadFileAsync(title)), MainWindowViewModel);
         }
-
+        //Changes the SelectedViewModel to CreateViewModel.
         private void OpenCreateView()
         {
             MainWindowViewModel.SelectedViewModel = new CreateViewModel(MainWindowViewModel);
         }
 
+        //Uses the EditButton command-parameter to make sure that a quiz has been selected then changes the SelectedViewModel to EditViewModel.
         private async void OpenEditView(string title)
         {
             if (string.IsNullOrEmpty(title))

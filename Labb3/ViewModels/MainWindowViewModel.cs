@@ -12,9 +12,10 @@ namespace Labb3.ViewModels
             set => SetProperty(ref _selectedViewModel, value);
         }
 
+        //Sets the SelectedViewModel to MainMenuViewModel, this will be triggered on startup.
         public MainWindowViewModel()
         {
-            _selectedViewModel = new MainMenuViewModel(this);
+            SelectedViewModel = new MainMenuViewModel(this);
         }
     }
 }

@@ -7,6 +7,8 @@ namespace Labb3.Models
 {
     internal sealed class FileManagerModel
     {
+        
+        //Saves the parameter quiz to a .json file in the folder Labb3.
         public static async void SaveFileAsync(Quiz quiz)
         {
             string localPath = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
@@ -19,6 +21,8 @@ namespace Labb3.Models
             await createStream.DisposeAsync();
         }
 
+
+        //Loads the file with the same name as the parameter title and returns it as a Quiz.
         public static async Task<Quiz> LoadFileAsync(string title)
         {
             string localPath = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
@@ -33,6 +37,7 @@ namespace Labb3.Models
             return quiz;
         }
 
+        //Removes the file with the same title as the parameter quiz.
         public static void RemoveFileAsync(Quiz quiz)
         {
             string localPath = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);

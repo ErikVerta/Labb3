@@ -28,7 +28,7 @@
             <local:EditView />
         </DataTemplate>
     </Window.Resources>
-    <Grid>
+    <Grid Background="Turquoise">
         <ContentControl Content="{Binding SelectedViewModel}" />
     </Grid>
 </Window>

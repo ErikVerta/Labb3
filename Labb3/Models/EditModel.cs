@@ -14,6 +14,7 @@ namespace Labb3.Models
             CurrentQuiz = currentQuiz;
         }
 
+        //Gets the index of the question whose statement corresponds to the parameter statement.
         public int GetIndex(string statement)
         {
             foreach (var question in CurrentQuiz.Questions)
@@ -26,18 +27,18 @@ namespace Labb3.Models
             return 0;
         }
 
+        //Gets the statement from all of the questions in the quiz and returns them as a string[].
         public string[] GetStatements()
         {
-            var statements = new List<string>();
-            foreach (var question in CurrentQuiz.Questions)
+            var statements = new string[CurrentQuiz.Questions.Count];
+            for (int i = 0; i < CurrentQuiz.Questions.Count; i++)
             {
-                statements.Add(question.Statement);
+                statements[i] = CurrentQuiz.Questions.ElementAt(i).Statement;
             }
 
-            var returnArray = statements.ToArray();
-            return returnArray;
+            return statements;
         }
-
+        //Looks for the question whose statement corresponds to the parameter statement and sets CurrentQuestion to that question.
         public void SetCurrentQuestion(string statement)
         {
             foreach (var question in CurrentQuiz.Questions)

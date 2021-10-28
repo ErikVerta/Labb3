@@ -30,10 +30,11 @@ namespace Labb3.ViewModels
             MainWindowViewModel = mainWindowViewModel;
             _correctAnswers = correctAnswers;
             _totalQuestionsCount = totalQuestionsCount;
-            FinishCommand = new RelayCommand(LoadMainMenu);
+            FinishCommand = new RelayCommand(OpenMainMenuView);
         }
 
-        private void LoadMainMenu()
+        //Changes SelectedViewModel to MainMenuViewModel.
+        private void OpenMainMenuView()
         {
             MainWindowViewModel.SelectedViewModel = new MainMenuViewModel(MainWindowViewModel);
         }

@@ -37,7 +37,7 @@
             VerticalAlignment="Top"
             FontSize="20">
             <TextBlock.Text>
-                <MultiBinding StringFormat="{}{0}/{1}">
+                <MultiBinding StringFormat="{}Question: {0}/{1}">
                     <Binding Path="PlayModel.AnsweredQuestions.Count" />
                     <Binding Path="PlayModel.CurrentQuiz.Questions.Count" />
                 </MultiBinding>
