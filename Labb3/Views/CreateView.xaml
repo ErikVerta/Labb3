@@ -23,7 +23,9 @@
             <RowDefinition Height="0.3*" />
             <RowDefinition Height="0.5*" />
             <RowDefinition Height="0.3*" />
-            <RowDefinition Height="5*" />
+            <RowDefinition Height="0.5*" />
+            <RowDefinition Height="0.3*" />
+            <RowDefinition Height="4*" />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="2*" />
@@ -146,9 +148,21 @@
             VerticalAlignment="Center"
             Command="{Binding RadioButtonCommand}"
             CommandParameter="2" />
+        <Label
+            Grid.Row="11"
+            Grid.RowSpan="3"
+            HorizontalAlignment="Right"
+            VerticalAlignment="Center"
+            Content="Category:"
+            FontSize="25" />
+        <TextBox
+            x:Name="CategoryTextBox"
+            Grid.Row="12"
+            Grid.Column="1"
+            Text="{Binding Category}" />
         <Grid
             x:Name="CenterBottomGrid"
-            Grid.Row="12"
+            Grid.Row="14"
             Grid.Column="1"
             Grid.ColumnSpan="2">
             <Grid.RowDefinitions>
@@ -175,7 +189,7 @@
                 Command="{Binding SaveQuizCommand}"
                 Content="Save" />
         </Grid>
-        <Grid x:Name="LeftCornerGrid" Grid.Row="12">
+        <Grid x:Name="LeftCornerGrid" Grid.Row="14">
             <Grid.RowDefinitions>
                 <RowDefinition />
                 <RowDefinition Height="2*" />

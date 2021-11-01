@@ -92,21 +92,18 @@ namespace Labb3.ViewModels
                 NextButtonIsEnabled = true;
             }
 
+            Answer1ButtonColor = Brushes.Red;
+            Answer2ButtonColor = Brushes.Red;
+            Answer3ButtonColor = Brushes.Red;
             switch (PlayModel.CurrentQuestion.CorrectAnswer)
             {
                 case 0:
                     Answer1ButtonColor = Brushes.Green;
-                    Answer2ButtonColor = Brushes.Red;
-                    Answer3ButtonColor = Brushes.Red;
                     break;
                 case 1:
-                    Answer1ButtonColor = Brushes.Red;
                     Answer2ButtonColor = Brushes.Green;
-                    Answer3ButtonColor = Brushes.Red;
                     break;
                 case 2:
-                    Answer1ButtonColor = Brushes.Red;
-                    Answer2ButtonColor = Brushes.Red;
                     Answer3ButtonColor = Brushes.Green;
                     break;
             }

@@ -25,7 +25,7 @@ namespace Labb3.ViewModels
             MainWindowViewModel = mainWindowViewModel;
         }
 
-        //Uses the PlayButton command-parameter to make sure that a quiz has been selected then changes the SelectedViewModel to PlayViewModel.
+        //Uses the PlayButton command-parameter to make sure that a quiz has been selected then changes the SelectedViewModel to CategoriesSelectionViewModel.
         private async void OpenPlayView(string title)
         {
             if (string.IsNullOrEmpty(title))
@@ -33,7 +33,8 @@ namespace Labb3.ViewModels
                 MessageBox.Show("Please choose a quiz to play.");
                 return;
             }
-            MainWindowViewModel.SelectedViewModel = new PlayViewModel(new PlayModel(await FileManagerModel.LoadFileAsync(title)), MainWindowViewModel);
+            
+            MainWindowViewModel.SelectedViewModel = new CategoriesSelectionViewModel(new PlayModel(await FileManagerModel.LoadFileAsync(title)), MainWindowViewModel);
         }
         //Changes the SelectedViewModel to CreateViewModel.
         private void OpenCreateView()

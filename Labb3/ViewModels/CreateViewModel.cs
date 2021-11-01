@@ -60,6 +60,14 @@ namespace Labb3.ViewModels
             }
         }
 
+        private string _category;
+
+        public string Category
+        {
+            get => _category;
+            set => SetProperty(ref _category, value);
+        }
+
         private string _validateTitleText;
 
         public string ValidateTitleText
@@ -106,7 +114,8 @@ namespace Labb3.ViewModels
         //clears the textBoxes.
         private void SaveQuestion()
         {
-            if (string.IsNullOrEmpty(Statement) || string.IsNullOrEmpty(Answer1) || string.IsNullOrEmpty(Answer2) || string.IsNullOrEmpty(Answer3))
+            if (string.IsNullOrEmpty(Statement) || string.IsNullOrEmpty(Answer1) || string.IsNullOrEmpty(Answer2) ||
+                string.IsNullOrEmpty(Answer3) || string.IsNullOrEmpty(Category))
             {
                 MessageBox.Show("Please fill in all of the fields.");
                 return;
@@ -117,11 +126,12 @@ namespace Labb3.ViewModels
                 return;
             }
             string[] answers = new[] { Answer1, Answer2, Answer3 };
-            Questions.Add(new Question(Statement, answers, CorrectAnswer));
+            Questions.Add(new Question(Statement, answers, new Category(Category), CorrectAnswer));
             Statement = string.Empty;
             Answer1 = string.Empty;
             Answer2 = string.Empty;
             Answer3 = string.Empty;
+            Category = string.Empty;
             MessageBox.Show("Question added.");
         }
 
@@ -140,7 +150,7 @@ namespace Labb3.ViewModels
         }
 
         //Validates the title by comparing it to the titles that are saved in the folder Labb3.
-        private bool ValidateTitle(string title)
+        private static bool ValidateTitle(string title)
         {
             var allTitles = Quiz.GetQuizTitles();
             foreach (var item in allTitles)
@@ -167,11 +177,6 @@ namespace Labb3.ViewModels
                 return;
             }
             FileManagerModel.SaveFileAsync(new Quiz(Questions, Title));
-            Title = string.Empty;
-            Statement = string.Empty;
-            Answer1 = string.Empty;
-            Answer2 = string.Empty;
-            Answer3 = string.Empty;
             MessageBox.Show("Quiz Saved.");
             MainWindowViewModel.SelectedViewModel = new MainMenuViewModel(MainWindowViewModel);
         }
