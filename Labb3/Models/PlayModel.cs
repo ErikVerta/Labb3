@@ -31,7 +31,7 @@ namespace Labb3.Models
             set => SetProperty(ref _chosenCategories, value);
         }
 
-        private int _validQuestionCount = 0;
+        private int _validQuestionCount;
 
         public int ValidQuestionCount
         {
