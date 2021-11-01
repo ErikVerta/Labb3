@@ -23,22 +23,40 @@ namespace Labb3.Models
             set => SetProperty(ref _answeredQuestions, value);
         }
 
+        private ObservableCollection<string> _chosenCategories;
+
+        public ObservableCollection<string> ChosenCategories
+        {
+            get => _chosenCategories;
+            set => SetProperty(ref _chosenCategories, value);
+        }
+
+        private int _validQuestionCount = 0;
+
+        public int ValidQuestionCount
+        {
+            get => _validQuestionCount;
+            set => SetProperty(ref _validQuestionCount, value);
+        }
+
         public PlayModel(Quiz currentQuiz)
         {
             CurrentQuiz = currentQuiz;
             AnsweredQuestions = new ObservableCollection<Question>();
+            ChosenCategories = new ObservableCollection<string>();
         }
 
-        //Makes sure that not all questions has been answered, then sets currentQuestion to a question that has not yet been answered.
+        //Makes sure that not all questions has been answered and that the question hasn't been answered or is the wrong category. Then sets the currentQuestion.
         public bool GetQuestion()
         {
-            if (AnsweredQuestions.Count == CurrentQuiz.Questions.Count)
+            ValidQuestionCount = GetValidQuestionCount();
+            if (AnsweredQuestions.Count == ValidQuestionCount)
             {
                 return false;
             }
 
             var question = CurrentQuiz.GetRandomQuestion();
-            while (AnsweredQuestions.Contains(question))
+            while (AnsweredQuestions.Contains(question) || !ChosenCategories.Contains(question.Category.Name.ToLower()))
             {
                 question = CurrentQuiz.GetRandomQuestion();
             }
@@ -51,6 +69,20 @@ namespace Labb3.Models
         public bool ValidateAnswer(int answer)
         {
             return answer == CurrentQuestion.CorrectAnswer;
+        }
+
+        public int GetValidQuestionCount()
+        {
+            var tempcount = 0;
+            foreach (var question in CurrentQuiz.Questions)
+            {
+                if (ChosenCategories.Contains(question.Category.Name.ToLower()))
+                {
+                    tempcount++;
+                }
+            }
+
+            return tempcount;
         }
     }
 }

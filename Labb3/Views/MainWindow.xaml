@@ -27,6 +27,9 @@
         <DataTemplate DataType="{x:Type viewModels:EditViewModel}">
             <local:EditView />
         </DataTemplate>
+        <DataTemplate DataType="{x:Type viewModels:CategoriesSelectionViewModel}">
+            <local:CategoriesSelectionView />
+        </DataTemplate>
     </Window.Resources>
     <Grid Background="Turquoise">
         <ContentControl Content="{Binding SelectedViewModel}" />

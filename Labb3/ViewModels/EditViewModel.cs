@@ -53,6 +53,14 @@ namespace Labb3.ViewModels
             set => SetProperty(ref _answer3, value);
         }
 
+        private string _category;
+
+        public string Category
+        {
+            get => _category;
+            set => SetProperty(ref _category, value);
+        }
+
         public int CorrectAnswer { get; set; }
         private string _comboBoxText;
 
@@ -124,7 +132,7 @@ namespace Labb3.ViewModels
         private void SaveEditedQuiz()
         {
             if (!string.IsNullOrEmpty(ComboBoxText) && (EditModel.CurrentQuestion.Statement != Statement || EditModel.CurrentQuestion.Answers[0] != Answer1 ||
-                EditModel.CurrentQuestion.Answers[1] != Answer2 || EditModel.CurrentQuestion.Answers[2] != Answer3))
+                EditModel.CurrentQuestion.Answers[1] != Answer2 || EditModel.CurrentQuestion.Answers[2] != Answer3 || EditModel.CurrentQuestion.Category.Name != Category))
             {
                 MessageBox.Show("Unsaved changes.");
                 return;
@@ -138,17 +146,18 @@ namespace Labb3.ViewModels
         //Makes sure that changes has been made then removes the old question and saves the new one.
         private void SaveQuestion()
         {
-            if (EditModel.CurrentQuestion.Statement == Statement || EditModel.CurrentQuestion.Answers[0] == Answer1 ||
-                EditModel.CurrentQuestion.Answers[1] == Answer2 || EditModel.CurrentQuestion.Answers[2] == Answer3)
+            if (EditModel.CurrentQuestion.Statement == Statement && EditModel.CurrentQuestion.Answers[0] == Answer1 &&
+                EditModel.CurrentQuestion.Answers[1] == Answer2 && EditModel.CurrentQuestion.Answers[2] == Answer3 && EditModel.CurrentQuestion.Category.Name == Category)
             {
                 MessageBox.Show("No changes has been made.");
                 return;
             }
             var index = EditModel.GetIndex(ComboBoxText);
             EditModel.CurrentQuiz.RemoveQuestion(index);
-            EditModel.CurrentQuiz.AddQuestion(Statement, CorrectAnswer, Answer1, Answer2, Answer3);
+            EditModel.CurrentQuiz.AddQuestion(Statement, CorrectAnswer, Category, Answer1, Answer2, Answer3);
             ComboBoxText = string.Empty;
             Statements = EditModel.GetStatements();
+            MessageBox.Show("Question Saved.");
         }
 
         //Uses the radioButtons command-parameters to set the correctAnswer.
@@ -157,7 +166,7 @@ namespace Labb3.ViewModels
             CorrectAnswer = int.Parse(index);
         }
 
-        //If the ComboBoxText is empty it will clear all of the TextBoxes and set uncheck all radiButtons,
+        //If the ComboBoxText is empty it will clear all of the TextBoxes and uncheck all radioButtons,
         //otherwise it will set the currentQuestion and set the corresponding properties.
         private void ChangeQuestion()
         {
@@ -167,6 +176,7 @@ namespace Labb3.ViewModels
                 Answer1 = string.Empty;
                 Answer2 = string.Empty;
                 Answer3 = string.Empty;
+                Category = string.Empty;
                 Answer1RadioButtonIsChecked = false;
                 Answer2RadioButtonIsChecked = false;
                 Answer3RadioButtonIsChecked = false;
@@ -178,6 +188,7 @@ namespace Labb3.ViewModels
             Answer1 = EditModel.CurrentQuestion.Answers[0];
             Answer2 = EditModel.CurrentQuestion.Answers[1];
             Answer3 = EditModel.CurrentQuestion.Answers[2];
+            Category = EditModel.CurrentQuestion.Category.Name;
 
             switch (EditModel.CurrentQuestion.CorrectAnswer)
             {
