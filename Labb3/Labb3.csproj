@@ -6,13 +6,21 @@
     <UseWPF>true</UseWPF>
   </PropertyGroup>
 
+  <ItemGroup>
+    <None Remove="Views\seankingston1.jpg" />
+  </ItemGroup>
+
 	<ItemGroup>
-		<PackageReference Include="Extended.Wpf.Toolkit" Version="4.1.0" >
+		<PackageReference Include="Extended.Wpf.Toolkit" Version="4.1.0">
 			<NoWarn>
 				NU1701
 			</NoWarn>
 		</PackageReference>
 		<PackageReference Include="Microsoft.Toolkit.Mvvm" Version="7.1.1" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Folder Include="Images\" />
 	</ItemGroup>
 
 </Project>

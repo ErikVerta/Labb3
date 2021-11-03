@@ -1,10 +1,14 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Media.Imaging;
 using Labb3.Models;
 using Microsoft.Toolkit.Mvvm.ComponentModel;
 using Microsoft.Toolkit.Mvvm.Input;
+using Microsoft.Win32;
 
 namespace Labb3.ViewModels
 {
@@ -15,6 +19,7 @@ namespace Labb3.ViewModels
         public ICommand AddQuestionCommand { get; }
         public ICommand RadioButtonCommand { get; }
         public ICommand MainMenuCommand { get; }
+        public ICommand OpenImageCommand { get; }
 
         private int CorrectAnswer { get; set; }
 
@@ -84,6 +89,14 @@ namespace Labb3.ViewModels
             set => SetProperty(ref _validateTitleTextColor, value);
         }
 
+        private string _imageTextBlockContent;
+
+        public string ImageTextBlockContent
+        {
+            get => _imageTextBlockContent;
+            set => SetProperty(ref _imageTextBlockContent, value);
+        }
+
         private MainWindowViewModel MainWindowViewModel { get; }
 
         public CreateViewModel(MainWindowViewModel mainWindowViewModel)
@@ -93,9 +106,24 @@ namespace Labb3.ViewModels
             AddQuestionCommand = new RelayCommand(SaveQuestion);
             RadioButtonCommand = new RelayCommand<string>(SetCorrectAnswer);
             MainMenuCommand = new RelayCommand(OpenMainMenuView);
+            OpenImageCommand = new RelayCommand(OpenImage);
             Questions = new List<Question>();
             ValidateTitleText = "Unavailable";
             ValidateTitleTextColor = Brushes.Red;
+        }
+
+        //Opens a SaveDialog and sets the imageTextBlockText to the chosen image path.
+        private void OpenImage()
+        {
+            OpenFileDialog op = new OpenFileDialog();
+            op.Title = "Select a picture";
+            op.Filter = "All supported graphics|*.jpg;*.jpeg;*.png|" +
+                        "JPEG (*.jpg;*.jpeg)|*.jpg;*.jpeg|" +
+                        "Portable Network Graphic (*.png)|*.png";
+            if (op.ShowDialog() == true)
+            {
+                ImageTextBlockContent = op.FileName;
+            }
         }
 
         //Changes the SelectedViewModel to MainMenuViewModel.
@@ -125,13 +153,23 @@ namespace Labb3.ViewModels
                 MessageBox.Show("Please chose the correct answer.");
                 return;
             }
+
             string[] answers = new[] { Answer1, Answer2, Answer3 };
-            Questions.Add(new Question(Statement, answers, new Category(Category), CorrectAnswer));
+            if (string.IsNullOrEmpty(ImageTextBlockContent))
+            {
+                Questions.Add(new Question(Statement, answers, new Category(Category), CorrectAnswer));
+            }
+            else
+            {
+                FileManagerModel.SaveImage(ImageTextBlockContent);
+                Questions.Add(new Question(Statement, answers, new Category(Category), CorrectAnswer, GetImagePath()));
+            }
             Statement = string.Empty;
             Answer1 = string.Empty;
             Answer2 = string.Empty;
             Answer3 = string.Empty;
             Category = string.Empty;
+            ImageTextBlockContent = string.Empty;
             MessageBox.Show("Question added.");
         }
 
@@ -179,6 +217,21 @@ namespace Labb3.ViewModels
             FileManagerModel.SaveFileAsync(new Quiz(Questions, Title));
             MessageBox.Show("Quiz Saved.");
             MainWindowViewModel.SelectedViewModel = new MainMenuViewModel(MainWindowViewModel);
+        }
+
+        //Returns the new path of the image in the labb3/Image folder.
+        private string GetImagePath()
+        {
+            if (ImageTextBlockContent != null)
+            {
+                string localPath = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
+                string folderPath = Path.Combine(localPath, @"Labb3", @"Images");
+                string imageName = Path.GetFileName(ImageTextBlockContent);
+                Directory.CreateDirectory(folderPath);
+                return Path.Combine(folderPath, imageName);
+            }
+
+            return string.Empty;
         }
     }
 }

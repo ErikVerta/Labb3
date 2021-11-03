@@ -2,6 +2,7 @@
 using System.IO;
 using System.Threading.Tasks;
 using System.Text.Json;
+using System.Windows.Data;
 
 namespace Labb3.Models
 {
@@ -46,6 +47,20 @@ namespace Labb3.Models
             Directory.CreateDirectory(folderPath);
 
             File.Delete(fullPath);
+        }
+
+        public static void SaveImage(string imagePath)
+        {
+            string localPath = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
+            string folderPath = Path.Combine(localPath, @"Labb3", @"Images");
+            string imageName = Path.GetFileName(imagePath);
+            string newPath = Path.Combine(folderPath, imageName);
+            Directory.CreateDirectory(folderPath);
+            if (File.Exists(newPath))
+            {
+                return;
+            }
+            File.Copy(imagePath, newPath);
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using System.Windows.Input;
+﻿using System.Windows;
+using System.Windows.Input;
 using System.Windows.Media;
 using Labb3.Models;
 using Microsoft.Toolkit.Mvvm.ComponentModel;
@@ -49,6 +50,30 @@ namespace Labb3.ViewModels
             get => _answer3ButtonColor;
             set => SetProperty(ref _answer3ButtonColor, value);
         }
+
+        private Visibility _imageVisibility;
+
+        public Visibility ImageVisibility
+        {
+            get => _imageVisibility;
+            set => SetProperty(ref _imageVisibility, value);
+        }
+
+        private Visibility _imageStatementTextVisibility;
+
+        public Visibility ImageStatementTextVisibility
+        {
+            get => _imageStatementTextVisibility;
+            set => SetProperty(ref _imageStatementTextVisibility, value);
+        }
+
+        private Visibility _noImageStatementTextVisibility;
+
+        public Visibility NoImageStatementTextVisibility
+        {
+            get => _noImageStatementTextVisibility;
+            set => SetProperty(ref _noImageStatementTextVisibility, value);
+        }
         public MainWindowViewModel MainWindowViewModel { get; }
 
         public PlayViewModel(PlayModel playModel, MainWindowViewModel mainWindowViewModel)
@@ -57,10 +82,7 @@ namespace Labb3.ViewModels
             AnswerQuestionCommand = new RelayCommand<string>(OnAnswer);
             NextQuestionCommand = new RelayCommand(NextQuestion);
             NextButtonIsEnabled = false;
-            playModel.GetQuestion();
-            Answer1ButtonColor = Brushes.Wheat;
-            Answer2ButtonColor = Brushes.Wheat;
-            Answer3ButtonColor = Brushes.Wheat;
+            NextQuestion();
             MainWindowViewModel = mainWindowViewModel;
         }
 
@@ -74,6 +96,19 @@ namespace Labb3.ViewModels
             if (!PlayModel.GetQuestion())
             {
                 MainWindowViewModel.SelectedViewModel = new ResultViewModel(CorrectAnswers, PlayModel.AnsweredQuestions.Count, MainWindowViewModel);
+            }
+
+            if (string.IsNullOrEmpty(PlayModel.CurrentQuestion.Image))
+            {
+                ImageVisibility = Visibility.Collapsed;
+                ImageStatementTextVisibility = Visibility.Collapsed;
+                NoImageStatementTextVisibility = Visibility.Visible;
+            }
+            else
+            {
+                ImageVisibility = Visibility.Visible;
+                ImageStatementTextVisibility = Visibility.Visible;
+                NoImageStatementTextVisibility = Visibility.Collapsed;
             }
             NextButtonIsEnabled = false;
         }
