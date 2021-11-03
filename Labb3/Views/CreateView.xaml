@@ -25,6 +25,8 @@
             <RowDefinition Height="0.3*" />
             <RowDefinition Height="0.5*" />
             <RowDefinition Height="0.3*" />
+            <RowDefinition Height="0.5*" />
+            <RowDefinition Height="0.3*" />
             <RowDefinition Height="4*" />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
@@ -71,22 +73,41 @@
             Grid.Column="0"
             HorizontalAlignment="Right"
             VerticalAlignment="Center"
+            Content="Image:"
+            FontSize="25" />
+        <TextBox
+            x:Name="ImageTextBox"
+            Grid.Row="4"
+            Grid.Column="1"
+            Text="{Binding ImageTextBlockContent}" />
+        <Button
+            x:Name="OpenImageButton"
+            Grid.Row="4"
+            Grid.Column="2"
+            Command="{Binding OpenImageCommand}"
+            Content="Open" />
+        <Label
+            Grid.Row="5"
+            Grid.RowSpan="3"
+            Grid.Column="0"
+            HorizontalAlignment="Right"
+            VerticalAlignment="Center"
             Content="Statement:"
             FontSize="25" />
         <TextBox
             x:Name="StatementTextBox"
-            Grid.Row="4"
+            Grid.Row="6"
             Grid.Column="1"
             Text="{Binding Statement}" />
         <Label
-            Grid.Row="3"
+            Grid.Row="5"
             Grid.RowSpan="3"
             Grid.Column="2"
             HorizontalAlignment="Center"
             VerticalAlignment="Center"
             Content="Correct Answer:" />
         <Label
-            Grid.Row="5"
+            Grid.Row="7"
             Grid.RowSpan="3"
             Grid.Column="0"
             HorizontalAlignment="Right"
@@ -95,19 +116,19 @@
             FontSize="25" />
         <TextBox
             x:Name="Answer1TextBox"
-            Grid.Row="6"
+            Grid.Row="8"
             Grid.Column="1"
             Text="{Binding Answer1}" />
         <RadioButton
             x:Name="Answer1CheckBox"
-            Grid.Row="6"
+            Grid.Row="8"
             Grid.Column="2"
             HorizontalAlignment="Center"
             VerticalAlignment="Center"
             Command="{Binding RadioButtonCommand}"
             CommandParameter="0" />
         <Label
-            Grid.Row="7"
+            Grid.Row="9"
             Grid.RowSpan="3"
             Grid.Column="0"
             HorizontalAlignment="Right"
@@ -116,19 +137,19 @@
             FontSize="25" />
         <TextBox
             x:Name="Answer2TextBox"
-            Grid.Row="8"
+            Grid.Row="10"
             Grid.Column="1"
             Text="{Binding Answer2}" />
         <RadioButton
             x:Name="Answer2CheckBox"
-            Grid.Row="8"
+            Grid.Row="10"
             Grid.Column="2"
             HorizontalAlignment="Center"
             VerticalAlignment="Center"
             Command="{Binding RadioButtonCommand}"
             CommandParameter="1" />
         <Label
-            Grid.Row="9"
+            Grid.Row="11"
             Grid.RowSpan="3"
             Grid.Column="0"
             HorizontalAlignment="Right"
@@ -137,19 +158,19 @@
             FontSize="25" />
         <TextBox
             x:Name="Answer3TextBox"
-            Grid.Row="10"
+            Grid.Row="12"
             Grid.Column="1"
             Text="{Binding Answer3}" />
         <RadioButton
             x:Name="Answer3CheckBox"
-            Grid.Row="10"
+            Grid.Row="12"
             Grid.Column="2"
             HorizontalAlignment="Center"
             VerticalAlignment="Center"
             Command="{Binding RadioButtonCommand}"
             CommandParameter="2" />
         <Label
-            Grid.Row="11"
+            Grid.Row="13"
             Grid.RowSpan="3"
             HorizontalAlignment="Right"
             VerticalAlignment="Center"
@@ -157,12 +178,12 @@
             FontSize="25" />
         <TextBox
             x:Name="CategoryTextBox"
-            Grid.Row="12"
+            Grid.Row="14"
             Grid.Column="1"
             Text="{Binding Category}" />
         <Grid
             x:Name="CenterBottomGrid"
-            Grid.Row="14"
+            Grid.Row="16"
             Grid.Column="1"
             Grid.ColumnSpan="2">
             <Grid.RowDefinitions>
@@ -189,7 +210,7 @@
                 Command="{Binding SaveQuizCommand}"
                 Content="Save" />
         </Grid>
-        <Grid x:Name="LeftCornerGrid" Grid.Row="14">
+        <Grid x:Name="LeftCornerGrid" Grid.Row="16">
             <Grid.RowDefinitions>
                 <RowDefinition />
                 <RowDefinition Height="2*" />
