@@ -25,7 +25,11 @@
             <RowDefinition Height="0.3*" />
             <RowDefinition Height="0.5*" />
             <RowDefinition Height="0.3*" />
-            <RowDefinition Height="4*" />
+            <RowDefinition Height="0.5*" />
+            <RowDefinition Height="0.3*" />
+            <RowDefinition Height="0.5*" />
+            <RowDefinition Height="0.3*" />
+            <RowDefinition Height="2*" />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="2*" />
@@ -55,22 +59,42 @@
             Grid.Column="0"
             HorizontalAlignment="Right"
             VerticalAlignment="Center"
+            Content="Image:"
+            FontSize="25" />
+        <TextBox
+            x:Name="ImageTextBox"
+            Grid.Row="4"
+            Grid.Column="1"
+            IsReadOnly="True"
+            Text="{Binding ImageTextBox}" />
+        <Button
+            x:Name="OpenImageButton"
+            Grid.Row="4"
+            Grid.Column="2"
+            Command="{Binding OpenImageCommand}"
+            Content="Open" />
+        <Label
+            Grid.Row="5"
+            Grid.RowSpan="3"
+            Grid.Column="0"
+            HorizontalAlignment="Right"
+            VerticalAlignment="Center"
             Content="Statement:"
             FontSize="25" />
         <TextBox
             x:Name="StatementTextBox"
-            Grid.Row="4"
+            Grid.Row="6"
             Grid.Column="1"
             Text="{Binding Statement}" />
         <Label
-            Grid.Row="3"
+            Grid.Row="5"
             Grid.RowSpan="3"
             Grid.Column="2"
             HorizontalAlignment="Center"
             VerticalAlignment="Center"
             Content="Correct Answer:" />
         <Label
-            Grid.Row="5"
+            Grid.Row="7"
             Grid.RowSpan="3"
             Grid.Column="0"
             HorizontalAlignment="Right"
@@ -79,12 +103,12 @@
             FontSize="25" />
         <TextBox
             x:Name="Answer1TextBox"
-            Grid.Row="6"
+            Grid.Row="8"
             Grid.Column="1"
             Text="{Binding Answer1}" />
         <RadioButton
             x:Name="Answer1RadioButton"
-            Grid.Row="6"
+            Grid.Row="8"
             Grid.Column="2"
             HorizontalAlignment="Center"
             VerticalAlignment="Center"
@@ -92,7 +116,7 @@
             CommandParameter="0"
             IsChecked="{Binding Answer1RadioButtonIsChecked}" />
         <Label
-            Grid.Row="7"
+            Grid.Row="9"
             Grid.RowSpan="3"
             Grid.Column="0"
             HorizontalAlignment="Right"
@@ -101,12 +125,12 @@
             FontSize="25" />
         <TextBox
             x:Name="Answer2RadioButton"
-            Grid.Row="8"
+            Grid.Row="10"
             Grid.Column="1"
             Text="{Binding Answer2}" />
         <RadioButton
             x:Name="Answer2CheckBox"
-            Grid.Row="8"
+            Grid.Row="10"
             Grid.Column="2"
             HorizontalAlignment="Center"
             VerticalAlignment="Center"
@@ -114,7 +138,7 @@
             CommandParameter="1"
             IsChecked="{Binding Answer2RadioButtonIsChecked}" />
         <Label
-            Grid.Row="9"
+            Grid.Row="11"
             Grid.RowSpan="3"
             Grid.Column="0"
             HorizontalAlignment="Right"
@@ -123,12 +147,12 @@
             FontSize="25" />
         <TextBox
             x:Name="Answer3RadioButton"
-            Grid.Row="10"
+            Grid.Row="12"
             Grid.Column="1"
             Text="{Binding Answer3}" />
         <RadioButton
             x:Name="Answer3CheckBox"
-            Grid.Row="10"
+            Grid.Row="12"
             Grid.Column="2"
             HorizontalAlignment="Center"
             VerticalAlignment="Center"
@@ -136,7 +160,36 @@
             CommandParameter="2"
             IsChecked="{Binding Answer3RadioButtonIsChecked}" />
         <Label
-            Grid.Row="11"
+            Grid.Row="13"
+            Grid.RowSpan="3"
+            Grid.Column="0"
+            HorizontalAlignment="Right"
+            VerticalAlignment="Center"
+            Content="Answer 4:"
+            FontSize="25" />
+        <TextBox
+            x:Name="Answer4TextBox"
+            Grid.Row="14"
+            Grid.Column="1"
+            Text="{Binding Answer4, UpdateSourceTrigger=PropertyChanged}" />
+        <RadioButton
+            x:Name="Answer4RadioButton"
+            Grid.Row="14"
+            Grid.Column="2"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center"
+            Command="{Binding RadioButtonCommand}"
+            CommandParameter="3"
+            IsChecked="{Binding Answer4RadioButtonIsChecked}"
+            IsEnabled="{Binding Answer4RadioButtonIsEnabled}" />
+        <TextBlock
+            Grid.Row="14"
+            Grid.Column="2"
+            HorizontalAlignment="Left"
+            VerticalAlignment="Center"
+            Text="*Optional" />
+        <Label
+            Grid.Row="15"
             Grid.RowSpan="3"
             Grid.Column="0"
             HorizontalAlignment="Right"
@@ -145,17 +198,17 @@
             FontSize="25" />
         <TextBox
             x:Name="CategoryTextBox"
-            Grid.Row="12"
+            Grid.Row="16"
             Grid.Column="1"
             Text="{Binding Category}" />
         <Grid
             x:Name="CenterBottomGrid"
-            Grid.Row="14"
+            Grid.Row="18"
             Grid.Column="1"
             Grid.ColumnSpan="2">
             <Grid.RowDefinitions>
                 <RowDefinition />
-                <RowDefinition Height="2*" />
+                <RowDefinition Height="0.5*" />
                 <RowDefinition />
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
@@ -181,11 +234,11 @@
         </Grid>
         <Grid
             x:Name="LeftCornerGrid"
-            Grid.Row="14"
+            Grid.Row="18"
             Grid.Column="0">
             <Grid.RowDefinitions>
                 <RowDefinition />
-                <RowDefinition Height="2*" />
+                <RowDefinition Height="0.5*" />
                 <RowDefinition />
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>

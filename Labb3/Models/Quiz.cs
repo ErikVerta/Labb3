@@ -45,9 +45,16 @@ namespace Labb3.Models
         }
 
         //instantiates a new Question object using the parameters and adds it to Questions.
-        public void AddQuestion(string statement, int correctAnswer,string category ,params string[] answers)
+        public void AddQuestion(string statement, int correctAnswer,string category,string image = "", params string[] answers)
         {
-            Questions.Add(new Question(statement, answers, new Category(category), correctAnswer));
+            if (string.IsNullOrEmpty(image))
+            {
+                Questions.Add(new Question(statement, answers, new Category(category), correctAnswer));
+            }
+            else
+            {
+                Questions.Add(new Question(statement, answers, new Category(category), correctAnswer, image));
+            }
             AddCategories(category.ToLower());
 
         }

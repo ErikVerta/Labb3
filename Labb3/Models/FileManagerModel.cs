@@ -49,6 +49,7 @@ namespace Labb3.Models
             File.Delete(fullPath);
         }
 
+        //uses the parameter imagePath to copy the image to the folder Images.
         public static void SaveImage(string imagePath)
         {
             string localPath = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);

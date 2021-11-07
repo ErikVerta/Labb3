@@ -51,6 +51,22 @@ namespace Labb3.ViewModels
             set => SetProperty(ref _answer3ButtonColor, value);
         }
 
+        private Brush _answer4ButtonColor;
+
+        public Brush Answer4ButtonColor
+        {
+            get => _answer4ButtonColor;
+            set => SetProperty(ref _answer4ButtonColor, value);
+        }
+
+        private Visibility _answer4ButtonVisibility;
+
+        public Visibility Answer4ButtonVisibility
+        {
+            get => _answer4ButtonVisibility;
+            set => SetProperty(ref _answer4ButtonVisibility, value);
+        }
+
         private Visibility _imageVisibility;
 
         public Visibility ImageVisibility
@@ -87,12 +103,13 @@ namespace Labb3.ViewModels
         }
 
         //If PlayModel.GetQuestion returns false the user has answered all the question and it changes SelectedViewModel to ResultViewModel.
-        //Otherwise it disables the next button.
+        //Otherwise it checks if the question has an image and 3 or 4 question and hides and shows the necessary elements, then it sets the NextButtonIsEnabled to false;
         private void NextQuestion()
         {
             Answer1ButtonColor = Brushes.Wheat;
             Answer2ButtonColor = Brushes.Wheat;
             Answer3ButtonColor = Brushes.Wheat;
+            Answer4ButtonColor = Brushes.Wheat;
             if (!PlayModel.GetQuestion())
             {
                 MainWindowViewModel.SelectedViewModel = new ResultViewModel(CorrectAnswers, PlayModel.AnsweredQuestions.Count, MainWindowViewModel);
@@ -109,6 +126,15 @@ namespace Labb3.ViewModels
                 ImageVisibility = Visibility.Visible;
                 ImageStatementTextVisibility = Visibility.Visible;
                 NoImageStatementTextVisibility = Visibility.Collapsed;
+            }
+
+            if (PlayModel.CurrentQuestion.Answers.Length != 4)
+            {
+                Answer4ButtonVisibility = Visibility.Collapsed;
+            }
+            else
+            {
+                Answer4ButtonVisibility = Visibility.Visible;
             }
             NextButtonIsEnabled = false;
         }
@@ -130,6 +156,7 @@ namespace Labb3.ViewModels
             Answer1ButtonColor = Brushes.Red;
             Answer2ButtonColor = Brushes.Red;
             Answer3ButtonColor = Brushes.Red;
+            Answer4ButtonColor = Brushes.Red;
             switch (PlayModel.CurrentQuestion.CorrectAnswer)
             {
                 case 0:
@@ -140,6 +167,9 @@ namespace Labb3.ViewModels
                     break;
                 case 2:
                     Answer3ButtonColor = Brushes.Green;
+                    break;
+                case 3:
+                    Answer4ButtonColor = Brushes.Green;
                     break;
             }
             PlayModel.AnsweredQuestions.Add(PlayModel.CurrentQuestion);

@@ -18,6 +18,7 @@ namespace Labb3.Models
             Answers = answers;
             CorrectAnswer = correctAnswer;
             Category = category;
+            Image = string.Empty;
         }
         [JsonConstructor]
         public Question(string statement, string[] answers, Category category, int correctAnswer, string image)

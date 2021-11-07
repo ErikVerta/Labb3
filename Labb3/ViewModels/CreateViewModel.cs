@@ -53,6 +53,26 @@ namespace Labb3.ViewModels
             get => _answer3;
             set => SetProperty(ref _answer3, value);
         }
+
+        private string _answer4;
+
+        public string Answer4
+        {
+            get => _answer4;
+            set
+            {
+                SetProperty(ref _answer4, value);
+                SetAnswer4RadioButtonIsEnabled();
+            }
+        }
+
+        private bool _answer4RadioButtonIsEnabled;
+
+        public bool Answer4RadioButtonIsEnabled
+        {
+            get => _answer4RadioButtonIsEnabled;
+            set => SetProperty(ref _answer4RadioButtonIsEnabled, value);
+        }
         private string _title;
 
         public string Title
@@ -89,12 +109,12 @@ namespace Labb3.ViewModels
             set => SetProperty(ref _validateTitleTextColor, value);
         }
 
-        private string _imageTextBlockContent;
+        private string _imageTextBox;
 
-        public string ImageTextBlockContent
+        public string ImageTextBox
         {
-            get => _imageTextBlockContent;
-            set => SetProperty(ref _imageTextBlockContent, value);
+            get => _imageTextBox;
+            set => SetProperty(ref _imageTextBox, value);
         }
 
         private MainWindowViewModel MainWindowViewModel { get; }
@@ -112,7 +132,7 @@ namespace Labb3.ViewModels
             ValidateTitleTextColor = Brushes.Red;
         }
 
-        //Opens a SaveDialog and sets the imageTextBlockText to the chosen image path.
+        //Opens a FileDialog and sets the imageTextBox to the chosen image path.
         private void OpenImage()
         {
             OpenFileDialog op = new OpenFileDialog();
@@ -122,7 +142,7 @@ namespace Labb3.ViewModels
                         "Portable Network Graphic (*.png)|*.png";
             if (op.ShowDialog() == true)
             {
-                ImageTextBlockContent = op.FileName;
+                ImageTextBox = op.FileName;
             }
         }
 
@@ -145,31 +165,46 @@ namespace Labb3.ViewModels
             if (string.IsNullOrEmpty(Statement) || string.IsNullOrEmpty(Answer1) || string.IsNullOrEmpty(Answer2) ||
                 string.IsNullOrEmpty(Answer3) || string.IsNullOrEmpty(Category))
             {
-                MessageBox.Show("Please fill in all of the fields.");
+                MessageBox.Show("Please fill in all of the required boxes.");
                 return;
             }
-            else if (CorrectAnswer < 0 || CorrectAnswer > 2)
+            else if (CorrectAnswer < 0 || CorrectAnswer > 3)
             {
-                MessageBox.Show("Please chose the correct answer.");
+                MessageBox.Show("Please choose the correct answer.");
                 return;
             }
 
-            string[] answers = new[] { Answer1, Answer2, Answer3 };
-            if (string.IsNullOrEmpty(ImageTextBlockContent))
+            if (string.IsNullOrEmpty(Answer4) && CorrectAnswer == 3)
+            {
+                MessageBox.Show("Answer 4 can't be the correct answer because there is no answer 4, please change the correct answer or fill in the answer 4 textbox.");
+                return;
+            }
+
+            string[] answers;
+            if (string.IsNullOrEmpty(Answer4))
+            {
+                answers = new[] { Answer1, Answer2, Answer3 };
+            }
+            else
+            {
+                answers = new[] { Answer1, Answer2, Answer3, Answer4 };
+            }
+            if (string.IsNullOrEmpty(ImageTextBox))
             {
                 Questions.Add(new Question(Statement, answers, new Category(Category), CorrectAnswer));
             }
             else
             {
-                FileManagerModel.SaveImage(ImageTextBlockContent);
+                FileManagerModel.SaveImage(ImageTextBox);
                 Questions.Add(new Question(Statement, answers, new Category(Category), CorrectAnswer, GetImagePath()));
             }
             Statement = string.Empty;
             Answer1 = string.Empty;
             Answer2 = string.Empty;
             Answer3 = string.Empty;
+            Answer4 = string.Empty;
             Category = string.Empty;
-            ImageTextBlockContent = string.Empty;
+            ImageTextBox = string.Empty;
             MessageBox.Show("Question added.");
         }
 
@@ -190,14 +225,15 @@ namespace Labb3.ViewModels
         //Validates the title by comparing it to the titles that are saved in the folder Labb3.
         private static bool ValidateTitle(string title)
         {
+            if (string.IsNullOrEmpty(title))
+            {
+                return false;
+            }
+
             var allTitles = Quiz.GetQuizTitles();
             foreach (var item in allTitles)
             {
                 if (item.ToLower() == title.ToLower())
-                {
-                    return false;
-                }
-                else if (string.IsNullOrEmpty(title))
                 {
                     return false;
                 }
@@ -222,16 +258,24 @@ namespace Labb3.ViewModels
         //Returns the new path of the image in the labb3/Image folder.
         private string GetImagePath()
         {
-            if (ImageTextBlockContent != null)
-            {
-                string localPath = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
-                string folderPath = Path.Combine(localPath, @"Labb3", @"Images");
-                string imageName = Path.GetFileName(ImageTextBlockContent);
-                Directory.CreateDirectory(folderPath);
-                return Path.Combine(folderPath, imageName);
-            }
+            string localPath = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
+            string folderPath = Path.Combine(localPath, @"Labb3", @"Images");
+            string imageName = Path.GetFileName(ImageTextBox);
+            Directory.CreateDirectory(folderPath);
+            return Path.Combine(folderPath, imageName);
+        }
 
-            return string.Empty;
+        //Sets Answer4RadioButtonIsEnabled to false if Answer4 is null or empty, otherwise sets it to true.
+        private void SetAnswer4RadioButtonIsEnabled()
+        {
+            if (string.IsNullOrEmpty(Answer4))
+            {
+                Answer4RadioButtonIsEnabled = false;
+            }
+            else
+            {
+                Answer4RadioButtonIsEnabled = true;
+            }
         }
     }
 }

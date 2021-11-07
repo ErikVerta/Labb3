@@ -17,6 +17,7 @@
             <RowDefinition />
             <RowDefinition />
             <RowDefinition />
+            <RowDefinition />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition />
@@ -114,8 +115,22 @@
                 TextWrapping="Wrap" />
         </Button>
         <Button
-            x:Name="NextButton"
+            x:Name="Answer4Button"
             Grid.Row="5"
+            Grid.Column="1"
+            Background="{Binding Answer4ButtonColor}"
+            Command="{Binding AnswerQuestionCommand}"
+            CommandParameter="3"
+            Visibility="{Binding Answer4ButtonVisibility}">
+            <TextBlock
+                FontSize="20"
+                Text="{Binding PlayModel.CurrentQuestion.Answers[3]}"
+                TextAlignment="Center"
+                TextWrapping="Wrap" />
+        </Button>
+        <Button
+            x:Name="NextButton"
+            Grid.Row="6"
             Grid.Column="1"
             Width="100"
             Command="{Binding NextQuestionCommand}"

@@ -15,17 +15,20 @@ namespace Labb3.ViewModels
         public CategoriesSelectionViewModel(PlayModel playModel, MainWindowViewModel mainWindowViewModel)
         {
             PlayModel = playModel;
-            OkCommand = new RelayCommand(LoadPlayView);
-            CancelCommand = new RelayCommand(LoadMainMenuView);
+            OkCommand = new RelayCommand(OpenPlayView);
+            CancelCommand = new RelayCommand(OpenMainMenuView);
             MainWindowViewModel = mainWindowViewModel;
         }
 
-        private void LoadMainMenuView()
+        //Changes the SelectedViewModel to MainMenuViewModel.
+        private void OpenMainMenuView()
         {
             MainWindowViewModel.SelectedViewModel = new MainMenuViewModel(MainWindowViewModel);
         }
 
-        private void LoadPlayView()
+        //Adds the selected categories to tempChosenCategories then sets PlayModel.ChosenCategories to tempChosenCategories and changes
+        //SelectedViewModel to PlayViewModel.
+        private void OpenPlayView()
         {
             var tempChosenCategories = new ObservableCollection<string>();
             foreach (var category in PlayModel.CurrentQuiz.Categories)
