@@ -1,0 +1,26 @@
+För att spela quizet behöver jag ha följande funktioner:
+1. välja vilket quiz man vill spela
+2. ladda in det valda quizet
+3. hämta en fråga som användare inte redan har svarat på.
+4. validera svaret på frågan.
+
+För att editera ett quiz behöver jag ha följande funktioner:
+1. välja vilket quiz man vill editera.
+2. ladda in det valda quizet.
+3. kunna editera varje frågas statement samt svarsalternativ.
+4. spara quizet(json).
+
+För att skapa ett nytt quiz behöver jag ha följande funktioner:
+1. kunna lägga till en titel.
+2. kunna lägga till en fråga.
+3. kunna ta bort en fråga.
+4. spara quizet(json).
+
+Länkar:
+Första view: https://wireframe.cc/Ia234Q
+Play view: https://wireframe.cc/uX1hbn
+Edit view: https://wireframe.cc/tLITx8
+Create view: https://wireframe.cc/3h8zHy
+Draw.IO: https://drive.google.com/file/d/1a8_NBB2-Rgsp1GRRKf2lz2VimGaWvucR/view?usp=sharing
+
+ 

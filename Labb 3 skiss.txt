@@ -1,0 +1,48 @@
+Class Question
+	
+	ctor Question(string statement, string[] answers, int correctAnswer)
+
+Class Quiz
+	
+	ctor Quiz(ICollection Questions, string title)
+	ctor Quiz(string title)
+	public Question GetRandomQuestion()
+		uses the R field to get a random question from Questions
+	
+	public void AddQuestion(string statement, int correctAnswer,params string[] answers)
+		Creates a new question using the parameters as arguments
+
+	public void RemoveQuestion(int index)
+		Uses the parameter to remove a question from Questions
+	
+	puiblic string[] GetAllSavesQuizTitles()
+		gets all the titles of the .json files in the Placeholder folder and adds them to a string[]
+		returns the string[]
+
+Class FileManager
+
+	public void SaveFile(Quiz quiz)
+		saves the quiz as a .json file in the Placeholder folder.
+	public Quiz LoadFile(string title)
+		uses the parameter to load a .json file from the Placeholder folder.
+		returns the Quiz
+
+Class QuizGame
+
+	public string[] GetQuestion()
+		Calls the GetRandomQuestion() method
+		If Question category does'nt exist in ChoosenCategories
+			Repeat method
+		If Question exist in AnsweredQuestions
+			repeat method
+		Save question in CurrentQuestion
+		return string[]
+
+	public bool ValidateAnswer(int answer)
+		If answer isn't equal to correctAnswer
+			return false
+		return true
+
+	public string[] ChooseCategories()
+		prints out the Categories from quiz and lets the user choose categories
+		return string[] filled with choosen categories
